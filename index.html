@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#710d17">
+<title>Diwali Celebration | Mystery Box</title>
+<meta property="og:title" content="Diwali Celebration – Mystery Box">
+<meta property="og:description" content="Discover the festive mystery and celebrate Diwali!">
+<meta property="og:image" content="https://res.cloudinary.com/qhj8lycl/image/upload/v1793511147/Diwali_Free_Bonus_Game_Extravaganza.png">
+<meta property="og:type" content="website">
+
+<style>
+:root{
+ --red:#710d17;
+ --red2:#a51c25;
+ --dark:#32070b;
+ --gold:#ffd66d;
+ --gold2:#f4ad2f;
+ --cream:#fff5dc;
+ --ink:#641017;
+ --muted:#98633b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+ min-height:100vh;
+ overflow-x:hidden;
+ color:#fff;
+ font-family:Arial,Helvetica,sans-serif;
+ background:
+ radial-gradient(ellipse at 50% 0%,#a92c2c 0%,transparent 48%),
+ linear-gradient(145deg,#2d0609,#790f19 55%,#39080d);
+}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid white;outline-offset:3px}
+.app{width:100%;max-width:510px;margin:auto;padding:14px 15px 30px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:7px 1px 17px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-icon{
+ width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+ background:linear-gradient(145deg,#fff0b4,#eaa02a);
+ color:#711019;font-size:23px;box-shadow:0 5px 18px #0004
+}
+.brand-name{font-size:14px;font-weight:1000;letter-spacing:1.3px}
+.brand-sub{font-size:9px;letter-spacing:1.5px;color:#ffdf9c;margin-top:4px}
+.campaign-tag{
+ font-size:9px;font-weight:900;letter-spacing:1px;
+ color:#ffe5a9;border:1px solid #ffdb7c88;
+ background:#ffffff12;padding:8px 10px;border-radius:30px
+}
+.hero{text-align:center;padding:17px 3px 19px}
+.eyebrow{font-size:10px;font-weight:900;letter-spacing:3px;color:var(--gold);margin-bottom:11px}
+h1{
+ font-size:clamp(30px,8vw,43px);line-height:1.04;letter-spacing:-1.5px;
+ font-weight:1000;color:#fff3d3;
+ text-shadow:0 3px 0 #9d4b16,0 9px 24px #0006
+}
+h1 span{color:var(--gold)}
+.hero-desc{max-width:350px;margin:13px auto 0;font-size:13px;line-height:1.65;color:#ffe9c2}
+.decor-line{display:flex;align-items:center;justify-content:center;gap:10px;margin:17px auto 0;color:#ffdb83;font-size:12px}
+.decor-line:before,.decor-line:after{content:"";height:1px;width:48px;background:#ffd66d88}
+.screen{display:none}
+.screen.active{display:block;animation:enter .45s ease}
+@keyframes enter{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
+.panel{
+ background:linear-gradient(155deg,#fff9e9,#ffe9bb);
+ border:2px solid #f4c65f;border-radius:24px;padding:17px 14px;
+ color:var(--ink);box-shadow:0 16px 45px #18020566,inset 0 0 0 3px #fff9
+}
+.panel-heading{text-align:center;margin-bottom:14px}
+.panel-heading h2{font-size:17px;font-weight:1000}
+.panel-heading p{font-size:11px;color:var(--muted);margin-top:6px}
+.steps{display:flex;justify-content:center;gap:7px;margin-bottom:16px}
+.step{
+ background:#ead7b5;color:#875d38;padding:7px 11px;border-radius:30px;
+ font-size:9px;font-weight:900
+}
+.step.active{background:#85121b;color:#fff0c5}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.gift{
+ min-width:0;aspect-ratio:1;border:2px solid #e5a12d;border-radius:16px;
+ background:linear-gradient(145deg,#a91524,#650a13);color:white;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;
+ position:relative;overflow:hidden;
+ box-shadow:0 5px 0 #89551c,0 9px 15px #6b290d22;
+ transition:transform .2s,filter .2s
+}
+.gift:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,#ffffff25,transparent 50%,#0002)}
+.gift:not(:disabled):hover{transform:translateY(-3px);filter:brightness(1.12)}
+.gift:not(:disabled):active{transform:scale(.96)}
+.gift:disabled{cursor:default}
+.box-icon{font-size:clamp(28px,8vw,43px);line-height:1.2}
+.box-text{font-size:9px;font-weight:900;letter-spacing:.7px;color:#ffe9a8;margin-top:7px}
+.gift.empty{background:linear-gradient(145deg,#f5e6c9,#e8cfa1);color:#79421d;border-color:#d3a45c;box-shadow:0 4px 0 #c3a16e}
+.gift.empty .box-text{color:#865127}
+.gift.winner{
+ background:linear-gradient(145deg,#fff2ae,#ffc43d);color:#68100c;
+ border:3px solid #fff1b6;box-shadow:0 0 0 3px #ffb928,0 0 28px #ffcf4e;
+ animation:pulse 1.4s infinite alternate
+}
+.gift.winner .box-text{color:#76120e}
+.gift.item{background:linear-gradient(145deg,#fff8e8,#f0d8a7);color:#713819;border-color:#d5a34b}
+.gift.item .box-text{color:#75421e}
+@keyframes pulse{to{transform:scale(1.035);filter:brightness(1.08)}}
+.status{text-align:center;min-height:45px;padding:14px 3px 2px;font-size:12px;font-weight:800;line-height:1.5;color:#71351b}
+.result{
+ display:none;text-align:center;background:linear-gradient(135deg,#fff0ae,#ffca4d);
+ border:1px solid #e6a832;border-radius:16px;padding:14px;margin-top:12px
+}
+.result.show{display:block;animation:pop .4s ease}
+.result strong{display:block;font-size:28px;margin:5px}
+.result p{font-size:11px;line-height:1.5}
+@keyframes pop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.btn{
+ width:100%;border:0;border-radius:13px;padding:14px;margin-top:13px;
+ background:linear-gradient(135deg,#ffe99d,#ffb92d);color:#64100e;
+ font-size:13px;font-weight:1000;box-shadow:0 4px 0 #bd7d16
+}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #bd7d16}
+.btn-dark{background:#7c111a;color:#fff0c5;box-shadow:0 4px 0 #4b090e}
+.full-panel{
+ margin-top:20px;padding:26px 19px;text-align:center;border-radius:23px;
+ background:linear-gradient(155deg,#fff9e9,#ffebc0);
+ color:#68100e;border:2px solid #ffd76a;box-shadow:0 15px 40px #16020455
+}
+.big-icon{font-size:57px;margin-bottom:12px}
+.full-panel h2{font-size:26px;line-height:1.15;margin-bottom:10px}
+.full-panel p{font-size:13px;line-height:1.7;color:#7c4526}
+.amount{font-size:35px;font-weight:1000;color:#9b171b;margin:13px 0}
+.count{font-size:30px;font-weight:1000;color:#8b1119;margin:15px 0 3px}
+.progress{height:11px;border-radius:30px;background:#e8d1aa;overflow:hidden;margin:13px 0}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#e89b18,#ffd76a);transition:width .4s}
+.share-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}
+.share{
+ border:0;border-radius:12px;padding:13px 8px;
+ font-size:12px;font-weight:900;color:white
+}
+.whatsapp{background:#168d52}
+.facebook{background:#1877e8}
+.messenger{background:#087cf5}
+.sms{background:#7550a5}
+.copy{background:#7c111a;grid-column:1/-1}
+.note{font-size:10px!important;color:#896443!important;margin-top:12px}
+.activity{
+ margin-top:17px;background:#ffffff10;border:1px solid #ffdf9c44;
+ border-radius:17px;padding:12px 13px
+}
+.activity-title{font-size:9px;letter-spacing:1.6px;color:#ffdf9c;font-weight:900;margin-bottom:9px}
+.activity-row{display:flex;align-items:center;gap:10px}
+.activity-avatar{
+ width:33px;height:33px;border-radius:50%;display:grid;place-items:center;
+ background:#ffdf9c;color:#74121a;font-size:16px;flex-shrink:0
+}
+.activity-text{font-size:11px;line-height:1.5;color:#fff1d5}
+.activity-text b{color:#ffdb7b}
+.activity-label{font-size:9px;color:#ffdf9c}
+.winner-toast{
+ position:fixed;z-index:20;top:12px;left:50%;
+ transform:translate(-50%,-150%);
+ width:min(420px,calc(100% - 24px));
+ display:flex;align-items:center;gap:10px;padding:11px 13px;
+ background:#fff8e8;color:#68100e;border:1px solid #ffd76a;
+ border-radius:15px;box-shadow:0 10px 35px #0005;
+ transition:transform .45s cubic-bezier(.2,.8,.2,1)
+}
+.winner-toast.show{transform:translate(-50%,0)}
+.toast-icon{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#ffe3a0;font-size:19px;flex-shrink:0}
+.toast-copy{font-size:11px;line-height:1.5}
+.toast-copy b{font-size:12px}
+.toast-tag{font-size:8px;letter-spacing:1px;font-weight:900;color:#936239}
+.footer{text-align:center;font-size:10px;line-height:1.8;color:#f4d8a6;padding:19px 8px 0}
+.sparkle{position:fixed;pointer-events:none;z-index:30;animation:float 2s ease-out forwards;font-size:20px}
+@keyframes float{0%{opacity:0;transform:translateY(0) scale(.5)}15%{opacity:1}100%{opacity:0;transform:translateY(-140px) rotate(30deg) scale(1.4)}}
+@media(max-width:360px){
+ .app{padding:10px 10px 25px}.grid{gap:7px}.panel{padding:13px 10px}
+ .gift{border-radius:12px}.box-text{font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+
+<body>
+
+<div class="winner-toast" id="toast" aria-live="polite">
+ <div class="toast-icon">🎁</div>
+ <div class="toast-copy">
+  <div class="toast-tag">SAMPLE ACTIVITY</div>
+  <b id="toastName">Aarav Sharma</b> · <b id="toastAmount">9,000 points</b>
+ </div>
+</div>
+
+<main class="app">
+
+<header class="topbar">
+ <div class="brand">
+  <div class="brand-icon">🪔</div>
+  <div>
+   <div class="brand-name">DIWALI CELEBRATION</div>
+   <div class="brand-sub">FESTIVE MYSTERY EXPERIENCE</div>
+  </div>
+ </div>
+ <div class="campaign-tag">FESTIVAL 2026</div>
+</header>
+
+<!-- GAME -->
+<section class="screen active" id="gameScreen">
+ <div class="hero">
+  <div class="eyebrow">✦ THE FESTIVAL OF LIGHTS ✦</div>
+  <h1>DIWALI <span>MYSTERY</span><br>BOXES</h1>
+  <p class="hero-desc">A festive mystery awaits. Select three beautiful gift boxes and discover your celebration reward.</p>
+  <div class="decor-line">🪔 शुभ दीपावली 🪔</div>
+ </div>
+
+ <div class="panel">
+  <div class="panel-heading">
+   <h2>🎁 SELECT YOUR GIFT BOXES</h2>
+   <p>Choose three boxes to reveal their contents</p>
+  </div>
+  <div class="steps">
+   <div class="step active" id="step1">01 · SELECT</div>
+   <div class="step" id="step2">02 · SELECT</div>
+   <div class="step" id="step3">03 · SELECT</div>
+  </div>
+
+  <div class="grid" id="giftGrid">
+   <button class="gift" aria-label="Gift box 1"><span class="box-icon">🎁</span><span class="box-text">OPEN BOX</span></button>
+   <button class="gift" aria-label="Gift box 2"><span class="box-icon">🎁</span><span class="box-text">OPEN BOX</span></button>
+   <button class="gift" aria-label="Gift box 3"><span class="box-icon">🎁</span><span class="box-text">OPEN BOX</span></button>
+   <button class="gift" aria-label="Gift box 4"><span class="box-icon">🎁</span><span class="box-text">OPEN BOX</span></button>
+   <button class="gift" aria-label="Gift box 5"><span class="box-icon">🎁</span><span class="box-text">OPEN BOX</span></button>
+   <button class="gift" aria-label="Gift box 6"><span class="box-icon">🎁</span><span class="box-text">OPEN BOX</span></button>
+   <button class="gift" aria-label="Gift box 7"><span class="box-icon">🎁</span><span class="box-text">OPEN BOX</span></button>
+   <button class="gift" aria-label="Gift box 8"><span class="box-icon">🎁</span><span class="box-text">OPEN BOX</span></button>
+   <button class="gift" aria-label="Gift box 9"><span class="box-icon">🎁</span><span class="box-text">OPEN BOX</span></button>
+  </div>
+
+  <div class="status" id="status" aria-live="polite">Choose your first mystery box to begin.</div>
+
+  <div class="result" id="result">
+   <p>YOUR FESTIVAL POINTS</p>
+   <strong id="resultAmount">9,000</strong>
+   <p>Points shown for this promotional game experience.</p>
+  </div>
+
+  <button class="btn" id="continueBtn" hidden>CONTINUE →</button>
+ </div>
+
+ <div class="activity">
+  <div class="activity-title">FESTIVAL ACTIVITY · SAMPLE ENTRIES</div>
+  <div class="activity-row">
+   <div class="activity-avatar">✨</div>
+   <div class="activity-text">
+    <b id="activityName">Aarav Sharma</b> · <span id="activityReward">9,000 points</span>
+    <div class="activity-label">Illustrative sample entry</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- CONGRATULATIONS -->
+<section class="screen" id="congratsScreen">
+ <div class="full-panel">
+  <div class="big-icon">🎉</div>
+  <div class="eyebrow" style="color:#a56a19">SELECTION COMPLETED</div>
+  <h2>YOUR FESTIVAL REVEAL</h2>
+  <p>You have completed all three mystery box selections.</p>
+  <div class="amount" id="congratsAmount">9,000 POINTS</div>
+  <p>These are promotional game points and do not represent a cash payment or withdrawal balance.</p>
+  <button class="btn" id="referralNext">CONTINUE →</button>
+ </div>
+</section>
+
+<!-- SHARE -->
+<section class="screen" id="referralScreen">
+ <div class="full-panel">
+  <div class="big-icon">🪔</div>
+  <h2>SHARE THE DIWALI SPIRIT</h2>
+  <p>Send this festive experience to your friends and family.</p>
+
+  <div class="count">0 / 20</div>
+  <p>Referral progress is available after verified server-side tracking is connected.</p>
+  <div class="progress"><div class="progress-fill"></div></div>
+
+  <div class="share-grid">
+   <button class="share whatsapp" id="whatsappBtn">WhatsApp</button>
+   <button class="share facebook" id="facebookBtn">Facebook</button>
+   <button class="share messenger" id="messengerBtn">Messenger</button>
+   <button class="share sms" id="smsBtn">SMS</button>
+   <button class="share copy" id="copyBtn">COPY INVITATION LINK</button>
+  </div>
+
+  <p class="note">Sharing does not automatically verify a referral. No personal payment details are requested.</p>
+  <button class="btn" id="finishBtn">FINISH →</button>
+ </div>
+</section>
+
+<!-- FINAL -->
+<section class="screen" id="finalScreen">
+ <div class="full-panel">
+  <div class="big-icon">✨</div>
+  <h2>HAPPY DIWALI!</h2>
+  <p>May this festival bring light, happiness, peace and prosperity to you and your family.</p>
+  <div class="amount">शुभ दीपावली</div>
+  <p>Your mystery box experience is complete.</p>
+ </div>
+</section>
+
+<footer class="footer">
+ <div>🪔 DIWALI CELEBRATION 🪔</div>
+ <div>Promotional game experience · Terms and eligibility apply</div>
+ <div>Points are not cash and cannot be withdrawn.</div>
+</footer>
+</main>
+
+<script>
+"use strict";
+
+/* Update this to your published website URL if needed. */
+const SITE_URL = window.location.href.split("#")[0];
+
+const rewards = [10000,9000,8000,7000,5000,4000,3000,2000,1000];
+
+const items = [
+ ["🪙","GOLD COINS"],
+ ["🎆","FESTIVE SPARK"],
+ ["🍬","SWEET BOX"],
+ ["🪔","DIWALI LAMP"],
+ ["🎀","GIFT PACK"],
+ ["💎","GEM STONE"],
+ ["🌟","GOLD STAR"],
+ ["🎊","SURPRISE"]
+];
+
+/* Fictional examples, labelled as sample activity. */
+const sampleNames = [
+ ["Aarav Sharma",9000],["Priya Thapa",8000],
+ ["Suman Karki",4000],["Anisha Budha",2000],
+ ["Rohan Bista",1000],["Aayush Joshi",7000],
+ ["Sneha Rai",5000],["Bibek Khadka",3000],
+ ["Pooja Adhikari",8000],["Nischal Bohara",1000],
+ ["Kriti Shrestha",9000],["Roshan Saud",4000],
+ ["Sita Mahara",2000],["Anmol Rawal",6000],
+ ["Sabina KC",3000],["Prabin Tamang",7000],
+ ["Alisha Chaudhary",5000],["Kiran Poudel",1000],
+ ["Manish Bhandari",8000],["Riya Kunwar",4000]
+];
+
+const boxes=[...document.querySelectorAll(".gift")];
+const statusEl=document.getElementById("status");
+const result=document.getElementById("result");
+const continueBtn=document.getElementById("continueBtn");
+
+let attempt=0;
+let completed=false;
+let reward=0;
+let sampleIndex=0;
+let toastTimeout;
+
+function random(arr){
+ return arr[Math.floor(Math.random()*arr.length)];
+}
+
+function showScreen(id){
+ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function updateSteps(){
+ for(let i=1;i<=3;i++){
+  document.getElementById("step"+i).classList.toggle("active",i===attempt+1&&!completed);
+ }
+}
+
+function setBox(box,icon,label,kind){
+ box.className="gift "+kind;
+ box.innerHTML=`<span class="box-icon">${icon}</span><span class="box-text">${label}</span>`;
+ box.disabled=true;
+}
+
+function selectBox(box){
+ if(completed||box.disabled||attempt>=3)return;
+
+ attempt++;
+
+ if(attempt===1){
+  setBox(box,"😔","BETTER LUCK","empty");
+  statusEl.textContent="Better luck next time! Select your second box.";
+  updateSteps();
+  return;
+ }
+
+ if(attempt===2){
+  setBox(box,"✨","TRY AGAIN","empty");
+  statusEl.textContent="Try again! Select your third and final box.";
+  updateSteps();
+  return;
+ }
+
+ reward=random(rewards);
+ setBox(box,"💰",reward.toLocaleString("en-IN")+" PTS","winner");
+
+ const remaining=boxes.filter(b=>!b.disabled);
+ const shuffled=[...items].sort(()=>Math.random()-.5);
+
+ remaining.forEach((b,i)=>{
+  const item=shuffled[i%shuffled.length];
+  setBox(b,item[0],item[1],"item");
+ });
+
+ completed=true;
+ statusEl.textContent="All selections are complete. Your remaining boxes are now locked.";
+ document.getElementById("resultAmount").textContent=reward.toLocaleString("en-IN");
+ result.classList.add("show");
+ continueBtn.hidden=false;
+ updateSteps();
+ sparkle();
+}
+
+boxes.forEach(box=>box.addEventListener("click",()=>selectBox(box)));
+
+continueBtn.addEventListener("click",()=>{
+ document.getElementById("congratsAmount").textContent=
+ reward.toLocaleString("en-IN")+" POINTS";
+ showScreen("congratsScreen");
+});
+
+document.getElementById("referralNext").addEventListener("click",()=>{
+ showScreen("referralScreen");
+});
+
+document.getElementById("finishBtn").addEventListener("click",()=>{
+ showScreen("finalScreen");
+});
+
+/* One-time game lock on this browser.
+   For strong one-account-only protection, add server-side validation. */
+const STORAGE_KEY="diwali_mystery_completed_v1";
+
+function restoreCompletedGame(){
+ try{
+  if(localStorage.getItem(STORAGE_KEY)!=="yes")return;
+
+  completed=true;
+  attempt=3;
+  boxes.forEach((box,i)=>{
+   const old=[
+    ["😔","BETTER LUCK","empty"],
+    ["✨","TRY AGAIN","empty"],
+    ["💰","COMPLETED","winner"]
+   ];
+   if(i<3)setBox(box,old[i][0],old[i][1],old[i][2]);
+   else{
+    const item=items[(i-3)%items.length];
+    setBox(box,item[0],item[1],"item");
+   }
+  });
+  statusEl.textContent="This browser has already completed the selection.";
+  continueBtn.hidden=false;
+  result.classList.add("show");
+  document.getElementById("resultAmount").textContent="COMPLETED";
+ }catch(e){}
+}
+
+/* Mark the game completed when the third selection happens. */
+const originalSelectBox=selectBox;
+function selectAndSave(box){
+ const wasCompleted=completed;
+ originalSelectBox(box);
+ if(!wasCompleted&&completed){
+  try{localStorage.setItem(STORAGE_KEY,"yes")}catch(e){}
+ }
+}
+boxes.forEach(box=>{
+ box.replaceWith(box.cloneNode(true));
+});
+const freshBoxes=[...document.querySelectorAll(".gift")];
+freshBoxes.forEach(box=>box.addEventListener("click",()=>selectAndSave(box)));
+restoreCompletedGame();
+
+/* Share tools */
+const invitation="Celebrate Diwali with this festive mystery box experience! 🪔";
+
+document.getElementById("whatsappBtn").addEventListener("click",()=>{
+ const text=encodeURIComponent(invitation+"\n"+SITE_URL);
+ window.open("https://wa.me/?text="+text,"_blank","noopener");
+});
+
+document.getElementById("facebookBtn").addEventListener("click",()=>{
+ const url=encodeURIComponent(SITE_URL);
+ window.open("https://www.facebook.com/sharer/sharer.php?u="+url,
+ "_blank","noopener,noreferrer");
+});
+
+document.getElementById("messengerBtn").addEventListener("click",async()=>{
+ if(navigator.share){
+  try{
+   await navigator.share({title:"Diwali Celebration",text:invitation,url:SITE_URL});
+   return;
+  }catch(e){
+   if(e.name==="AbortError")return;
+  }
+ }
+ window.location.href="sms:?body="+encodeURIComponent(invitation+" "+SITE_URL);
+});
+
+document.getElementById("smsBtn").addEventListener("click",()=>{
+ window.location.href="sms:?body="+encodeURIComponent(invitation+" "+SITE_URL);
+});
+
+document.getElementById("copyBtn").addEventListener("click",async()=>{
+ const button=document.getElementById("copyBtn");
+ try{
+  await navigator.clipboard.writeText(SITE_URL);
+  button.textContent="LINK COPIED ✓";
+  setTimeout(()=>button.textContent="COPY INVITATION LINK",1800);
+ }catch(e){
+  window.prompt("Copy this invitation link:",SITE_URL);
+ }
+});
+
+/* Sample activity rotation. */
+const toast=document.getElementById("toast");
+
+function showSampleActivity(){
+ const entry=sampleNames[sampleIndex%sampleNames.length];
+ sampleIndex++;
+
+ document.getElementById("toastName").textContent=entry[0];
+ document.getElementById("toastAmount").textContent=
+ entry[1].toLocaleString("en-IN")+" points";
+
+ document.getElementById("activityName").textContent=entry[0];
+ document.getElementById("activityReward").textContent=
+ entry[1].toLocaleString("en-IN")+" points";
+
+ toast.classList.add("show");
+ clearTimeout(toastTimeout);
+ toastTimeout=setTimeout(()=>toast.classList.remove("show"),3500);
+}
+
+setTimeout(showSampleActivity,2500);
+setInterval(showSampleActivity,8500);
+
+/* Decorative festive sparkles. */
+function sparkle(){
+ const symbols=["✨","🌟","🎊","🪔","💛"];
+ for(let i=0;i<18;i++){
+  const el=document.createElement("div");
+  el.className="sparkle";
+  el.textContent=random(symbols);
+  el.style.left=(5+Math.random()*90)+"vw";
+  el.style.top=(35+Math.random()*45)+"vh";
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),2200);
+ }
+}
+</script>
+</body>
+</html>
